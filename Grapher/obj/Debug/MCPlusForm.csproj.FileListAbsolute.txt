@@ -1,0 +1,17 @@
+E:\Discord Bots\MsgCountPlus.NET\MsgCountPlusNET\MCPlusForm\bin\Debug\MCPlusForm.exe.config
+E:\Discord Bots\MsgCountPlus.NET\MsgCountPlusNET\MCPlusForm\bin\Debug\MCPlusForm.exe
+E:\Discord Bots\MsgCountPlus.NET\MsgCountPlusNET\MCPlusForm\bin\Debug\MCPlusForm.pdb
+E:\Discord Bots\MsgCountPlus.NET\MsgCountPlusNET\MCPlusForm\bin\Debug\OxyPlot.dll
+E:\Discord Bots\MsgCountPlus.NET\MsgCountPlusNET\MCPlusForm\bin\Debug\OxyPlot.WindowsForms.dll
+E:\Discord Bots\MsgCountPlus.NET\MsgCountPlusNET\MCPlusForm\bin\Debug\OxyPlot.pdb
+E:\Discord Bots\MsgCountPlus.NET\MsgCountPlusNET\MCPlusForm\bin\Debug\OxyPlot.xml
+E:\Discord Bots\MsgCountPlus.NET\MsgCountPlusNET\MCPlusForm\bin\Debug\OxyPlot.WindowsForms.pdb
+E:\Discord Bots\MsgCountPlus.NET\MsgCountPlusNET\MCPlusForm\bin\Debug\OxyPlot.WindowsForms.xml
+E:\Discord Bots\MsgCountPlus.NET\MsgCountPlusNET\MCPlusForm\obj\Debug\MCPlusForm.csprojAssemblyReference.cache
+E:\Discord Bots\MsgCountPlus.NET\MsgCountPlusNET\MCPlusForm\obj\Debug\MCPlusForm.Properties.Resources.resources
+E:\Discord Bots\MsgCountPlus.NET\MsgCountPlusNET\MCPlusForm\obj\Debug\MCPlusForm.csproj.GenerateResource.cache
+E:\Discord Bots\MsgCountPlus.NET\MsgCountPlusNET\MCPlusForm\obj\Debug\MCPlusForm.csproj.CoreCompileInputs.cache
+E:\Discord Bots\MsgCountPlus.NET\MsgCountPlusNET\MCPlusForm\obj\Debug\MCPlusForm.csproj.CopyComplete
+E:\Discord Bots\MsgCountPlus.NET\MsgCountPlusNET\MCPlusForm\obj\Debug\MCPlusForm.exe
+E:\Discord Bots\MsgCountPlus.NET\MsgCountPlusNET\MCPlusForm\obj\Debug\MCPlusForm.pdb
+E:\Discord Bots\MsgCountPlus.NET\MsgCountPlusNET\MCPlusForm\obj\Debug\MCPlusForm.GraphHandler.resources
