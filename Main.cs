@@ -32,6 +32,7 @@ namespace MsgCountPlusNET
         public static string CMD_PREFIX = "mc+";
 
         //public static List<jGuild> globalData = new List<jGuild>();
+        //List of color preferences per user
         public static List<jColor> globalColors = new List<jColor>();
         public static List<settingsUser> openSettingsChannels = new List<settingsUser>();
         //public static bool runUpdates = true;
@@ -47,6 +48,8 @@ namespace MsgCountPlusNET
 
         public static List<ulong> unIndexedIDs = new List<ulong>();
 
+        //Server performance stuff, doesn't seem to help much but I'm saving these
+        //for a rainy day
         public static bool isCPUOverloaded() {
             PerformanceCounter total_cpu = new PerformanceCounter("Processor", "% Processor Time", "_Total");
             float p = total_cpu.NextValue();
@@ -63,9 +66,11 @@ namespace MsgCountPlusNET
             }
         }
 
+        //Amount of times the generateUniqueID() command has been called. USed to ensure that everything is unique aside form general randomness
         private static int uses = 0;
         public static List<Thread> threads = new List<Thread>();
 
+        //Generates a unique id in string form
         public static string generateUniqueID()
         {
             string output = DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() + DateTime.Now.Second.ToString() + DateTime.Now.Millisecond;
@@ -84,6 +89,9 @@ namespace MsgCountPlusNET
             uses++;
             return output;
         }
+        
+        /**A bunch of stuff for making mongo easier. Did not make mongo easier. */
+
         //public static IMongoCollection<jGuild> globalData = Globals.db.GetCollection<jGuild>("globalData")
         public async static Task<List<jGuild>> requestDataWhereAsync(Expression<Func<jGuild, bool>> p) {
             //IMongoCollection<jGuild> globalData = Globals.db.GetCollection<jGuild>("globalData");
@@ -190,6 +198,7 @@ namespace MsgCountPlusNET
 
             Console.WriteLine("Starting...");
             Globals.waitForLessLoad();
+            //Starts the thread queuer
             var ts = new ThreadStart(backgroundLoop);
             var backgroundThread = new Thread(ts);
             backgroundThread.Start();            
@@ -233,6 +242,7 @@ namespace MsgCountPlusNET
         }
         static private async Task LeftGuild(SocketGuild guild)
         {
+            //Update status message
             await client.SetGameAsync("for mc+help | " + client.Guilds.Count + " Guilds and counting", type: ActivityType.Watching);
         }
 
@@ -284,6 +294,7 @@ namespace MsgCountPlusNET
         bool Initialized = false;
         private async Task ClientReady()
         {
+            //Initial start routine
             if (!Initialized)
             {
                 //jColor
@@ -295,6 +306,7 @@ namespace MsgCountPlusNET
                 Console.WriteLine("Checking collections...");
                 try
                 {
+                    //Check that the collections exist
                     IMongoQueryable<jGuild> storedGlobalData = Globals.db.GetCollection<jGuild>("globalData").AsQueryable();
                     IMongoQueryable<jColor> storedColors = Globals.db.GetCollection<jColor>("colorSettings").AsQueryable();
                 }
@@ -304,9 +316,12 @@ namespace MsgCountPlusNET
                     return;
                 }                
                 //Console.WriteLine("File data retreived");
+                //Start command handler
                 commandHandler = new CommandHandler(client, Commands);
                 await commandHandler.InstallCommandsAsync();
 
+                // Sometihng I tried out some time ago, to re-index all servers at each start
+                // That went about as well as you imagine it would.
                 if (Globals.isDebugging)
                 {
                     Console.WriteLine("Updating data from last start...");
@@ -331,8 +346,8 @@ namespace MsgCountPlusNET
             //commandhandler.internal_index(guild);
             //await client.SetGameAsync("for mc+help | " + client.Guilds.Count + " Guilds and counting", type: ActivityType.Watching);
 
-            Globals.indexServer(guild);
-            //t.Start();
+            //Get past message data from the server
+            Globals.indexServer(guild);            
         }
 
         public async Task MessageReceived(SocketMessage message)
@@ -348,6 +363,7 @@ namespace MsgCountPlusNET
             var Message = message as SocketUserMessage;
             var Context = new SocketCommandContext(client, Message);
 
+            //When debugging, ignore messages not from testing server
             if (Globals.isDebugging && Context.Guild.Id != 614202470289244171)
             {
                 return;                               
@@ -358,6 +374,7 @@ namespace MsgCountPlusNET
             if (message.Author.IsBot) { return; }
 
             if (Context.Guild == null) {
+                //if the user is changing bot settings, go through all this stuff
                 if (Globals.openSettingsChannels.Exists(item => item.Id == message.Author.Id))
                 {
                     settingsUser channel = Globals.openSettingsChannels.Find(item => item.Id == message.Author.Id);
@@ -545,6 +562,7 @@ namespace MsgCountPlusNET
 
             jGuild targetGuild = Globals.requestDataFind(item => item.Id == Context.Guild.Id);
 
+            //Rank reward handling
             if (targetGuild.settings.allowRankRewards) {
                 LegacyCommandHandler ch = new LegacyCommandHandler();
                 int usingScore;
@@ -555,6 +573,7 @@ namespace MsgCountPlusNET
                 else {
                     usingScore = ch.internal_score(message, Context);
                 }
+
                 IEnumerable<SocketRole> roles = Context.Guild.Roles.AsEnumerable();
                 SocketGuildUser user = message.Author as SocketGuildUser;
                 foreach (SocketRole role in Context.Guild.Roles) {
